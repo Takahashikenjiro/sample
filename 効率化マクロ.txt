@@ -1,0 +1,61 @@
+
+
+
+Sub TestFunctionCopy()
+    Dim tou_gyou As Long
+     Const sheet_togo As String = "統合"
+
+     '貼り付けたデータを数値に変換
+        tou_gyou = Worksheets(sheet_togo).Range("A1048576").End(xlUp).Row
+        
+    'H~Jの数式を最下行までコピー(関数コピー)
+        Range("H3:J3").Select
+        Range("H3:J3").Copy
+        Range("H4:J" & tou_gyou).PasteSpecial Paste:=xlPasteFormulas
+        Application.CutCopyMode = False
+    
+
+End Sub
+
+Sub Delete1()
+            
+ Dim column As Range, brow As Range
+ Dim maxrow As Long
+ Dim j As Long
+ Worksheets("統合").Activate
+            
+            
+ maxrow = Range("C65536").End(xlUp).Row
+ Set column = ThisWorkbook.Sheets(1).Range("C3", Cells(maxrow, 3))
+            
+ j = j + Elase1(column, maxrow)
+            
+ maxrow = Range("B65536").End(xlUp).Row
+ Set column = ThisWorkbook.Sheets(1).Range("B3", Cells(maxrow, 2))
+            
+ j = j + Elase1(column, maxrow)
+            
+Open ThisWorkbook.Path & "\1を消すマクロ結果.txt" For Output As #1
+Print #1, j & "件"
+Close #1
+            
+End Sub
+Function Elase1(ByRef column As Range, ByVal maxrow As Integer) As Integer
+            
+ Dim n As Long
+ Dim i As Long
+            
+ For i = 1 To maxrow
+  If column.Cells(i) = 1 Then
+   column.Cells(i) = ""
+   n = n + 1
+  End If
+ Next i
+            
+ Elase1 = n
+            
+End Function
+            
+
+
+
